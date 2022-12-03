@@ -17,6 +17,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
@@ -28,7 +29,7 @@
             </WindowsFormsHost.Child>
         </WindowsFormsHost>
 
-            <Grid Grid.Row="2" Grid.Column="1">
+        <Grid Grid.Row="2" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="auto"/>
@@ -39,15 +40,47 @@
                 <RowDefinition Height="10"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="10"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
-                <RadioButton x:Name="numberLine" GroupName="ScaleKind" Content="Zahlenstrahl" Margin="10" IsChecked="True"/>
-                <RadioButton x:Name="timeLine" GroupName="ScaleKind" Content="Zeitstrahl" Margin="10"/>
-                <RadioButton x:Name="thermometer" GroupName="ScaleKind" Content="Thermometer" Margin="10"/>
+            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3">
+                <RadioButton x:Name="numberLine" GroupName="ScaleKind" Content="Zahlenstrahl" Margin="10" IsChecked="True" Checked="numberLine_Checked"/>
+                <RadioButton x:Name="timeLine" GroupName="ScaleKind" Content="Zeitstrahl" Margin="10" Checked="timeLine_Checked"/>
+                <RadioButton x:Name="thermometer" GroupName="ScaleKind" Content="Thermometer" Margin="10" Checked="thermometer_Checked"/>
             </StackPanel>
+
+            <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Anfang der Skala:" Grid.Row="0" Grid.Column="0" Margin="0,0,20,0" Grid.ColumnSpan="2"/>
+                <Label Content="Ende der Skala:" Grid.Row="0" Grid.Column="2" Margin="0,0,20,0" Grid.ColumnSpan="2"/>
+                <TextBox x:Name="begin" Grid.Column="0" Text="" Margin="5,27,20,10" MinWidth="80" MaxLines="1" Grid.ColumnSpan="2" Grid.RowSpan="2" TextChanged="begin_TextChanged"/>
+                <TextBox x:Name="end" Grid.Column="2" Text="" Margin="5,27,20,10" MinWidth="80" MaxLines="1" Grid.RowSpan="2" TextChanged="end_TextChanged"/>
+            </Grid>
+
+            <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Markierung hinzufügen" Grid.Row="0" Grid.Column="0"/>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

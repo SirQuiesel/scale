@@ -15,8 +15,12 @@ namespace scale
         private Brush MainBrush { get; set; }
         private Pen MainPen { get; set; }
 
+        private MathModel ScaleData { get; set; }
+
         public MainWindow()
         {
+            ScaleData = new MathModel();
+
             InitializeComponent();
         }
 
@@ -28,6 +32,31 @@ namespace scale
 
             G.DrawLine(MainPen, new System.Drawing.Point(0, 0), new System.Drawing.Point((int) formsHost.MinWidth, (int) formsHost.MinHeight));
             // G.DrawLine(MainPen, new System.Drawing.Point(0, 0), new System.Drawing.Point(100, 100));
+        }
+
+        private void numberLine_Checked(object sender, RoutedEventArgs e)
+        {
+            ScaleData.SetScaleKind("numberLine");
+        }
+
+        private void timeLine_Checked(object sender, RoutedEventArgs e)
+        {
+            ScaleData.SetScaleKind("timeLine");
+        }
+
+        private void thermometer_Checked(object sender, RoutedEventArgs e)
+        {
+            ScaleData.SetScaleKind("thermometer");
+        }
+
+        private void begin_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            ScaleData.SetScaleBegin(double.Parse(begin.Text));
+        }
+
+        private void end_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            ScaleData.SetScaleBegin(double.Parse(end.Text));
         }
     }
 }
