@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows;
-using System.Windows.Forms;
-using System;
+using System.Windows.Controls;
 
 namespace scale
 {
@@ -12,14 +11,19 @@ namespace scale
     {
         private Graphics G { get; set; }
 
+        // Forms Brushes
         private Brush MainBrush { get; set; }
         private Pen MainPen { get; set; }
 
         private MathModel ScaleData { get; set; }
 
+        // Defines the Lnegth Width of an marker element.
+        private GridLength MarkerWidth { get; set; }
+
         public MainWindow()
         {
             ScaleData = new MathModel();
+            MarkerWidth = new GridLength(100);
 
             InitializeComponent();
         }
@@ -49,14 +53,59 @@ namespace scale
             ScaleData.SetScaleKind("thermometer");
         }
 
-        private void begin_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        private void saveStartAndEndPoints_Click(object sender, RoutedEventArgs e)
         {
             ScaleData.SetScaleBegin(double.Parse(begin.Text));
+            ScaleData.SetScaleEnd(double.Parse(end.Text));
         }
 
-        private void end_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        private void saveMarker_Click(object sender, RoutedEventArgs e)
         {
-            ScaleData.SetScaleBegin(double.Parse(end.Text));
+            double newMarker = double.Parse(marker.Text);
+            if (!ScaleData.ContainsScaleValue(newMarker))
+            {
+                ScaleData.AddScaleValue(newMarker);
+                listedMarkersLabel.Visibility = Visibility.Visible;
+                AddMarkerToUIList(newMarker);
+            }
+        }
+
+        /// Ads a marker label and a delete button to the listedMarkersPanel.
+        /// The delete button will delete the markers value from the MathModel and the elementGrid from the listedMarkersPanel.
+        private void AddMarkerToUIList(double marker)
+        {
+            Grid elementGrid = new Grid();
+            RowDefinition elementRow = new RowDefinition();
+            ColumnDefinition elementColumn0 = new ColumnDefinition();
+            ColumnDefinition elementColumn1 = new ColumnDefinition();
+            elementRow.Height = GridLength.Auto;
+            elementColumn0.Width = MarkerWidth;
+            elementColumn1.Width = MarkerWidth;
+            elementGrid.RowDefinitions.Add(elementRow);
+            elementGrid.ColumnDefinitions.Add(elementColumn0);
+            elementGrid.ColumnDefinitions.Add(elementColumn1);
+
+            Label markerLabel = new Label();
+            markerLabel.Content = marker;
+            Grid.SetRow(markerLabel, 0);
+            Grid.SetColumn(markerLabel, 0);
+            elementGrid.Children.Add(markerLabel);
+
+            Button deleteMarker = new Button();
+            deleteMarker.Content = "x";
+            deleteMarker.MinWidth = 25;
+            deleteMarker.Click += (sender, args) =>
+            {
+                ScaleData.DeleteScaleValue(marker);
+                listedMarkersPanel.Children.Remove(elementGrid);
+                if (ScaleData.ScaleValuesCount() == 0)
+                    listedMarkersLabel.Visibility = Visibility.Hidden;
+            };
+            Grid.SetRow(deleteMarker, 0);
+            Grid.SetColumn(deleteMarker, 1);
+            elementGrid.Children.Add(deleteMarker);
+
+            listedMarkersPanel.Children.Add(elementGrid);
         }
     }
 }

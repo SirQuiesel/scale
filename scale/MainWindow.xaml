@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:scale"
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Skalen Editor" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
@@ -22,7 +22,7 @@
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="1" Grid.Column="1" Margin="10" Content="Skala Eigenschaften:" FontSize="25" FontWeight="Bold"/>
+        <Label Grid.Row="1" Grid.Column="1" Margin="12,10,8,10" Content="Skala Eigenschaften:" FontSize="25" FontWeight="Bold"/>
         <WindowsFormsHost x:Name="formsHost" Grid.Row="2" Grid.Column="2" Margin="10" MinHeight="50" MinWidth="50">
             <WindowsFormsHost.Child>
                 <wf:Panel Paint="Panel_Paint"/>
@@ -55,31 +55,29 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
 
                 <Label Content="Anfang der Skala:" Grid.Row="0" Grid.Column="0" Margin="0,0,20,0" Grid.ColumnSpan="2"/>
                 <Label Content="Ende der Skala:" Grid.Row="0" Grid.Column="2" Margin="0,0,20,0" Grid.ColumnSpan="2"/>
-                <TextBox x:Name="begin" Grid.Column="0" Text="" Margin="5,27,20,10" MinWidth="80" MaxLines="1" Grid.ColumnSpan="2" Grid.RowSpan="2" TextChanged="begin_TextChanged"/>
-                <TextBox x:Name="end" Grid.Column="2" Text="" Margin="5,27,20,10" MinWidth="80" MaxLines="1" Grid.RowSpan="2" TextChanged="end_TextChanged"/>
-            </Grid>
+                <TextBox x:Name="begin" Grid.Column="0" Text="" Margin="5,5,10,10" MinWidth="80" MaxLines="1" Grid.Row="1"/>
+                <TextBox x:Name="end" Grid.Column="2" Text="" Margin="5,5,10,10" MinWidth="80" MaxLines="1" Grid.Row="1"/>
+                <Button x:Name="saveStartAndEndPoints" Content="Werte speichern" Grid.Row="1" Grid.Column="3" Margin="5,5,10,10" MinHeight="25" Cursor="Hand" Click="saveStartAndEndPoints_Click"/>
 
-            <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="100"/>
-                    <RowDefinition Height="100"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-
-                <Label Content="Markierung hinzufügen" Grid.Row="0" Grid.Column="0"/>
+                <Label Content="Markierung hinzufügen:" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"/>
+                <TextBox x:Name="marker" Grid.Row="3" Grid.Column="0" Text="" Margin="5,5,10,10" MinWidth="80" MaxLines="1"/>
+                <Button x:Name="saveMarker" Content="Wert speichern" Grid.Row="3" Grid.Column="3" Margin="4,5,11,10" MinHeight="25" Cursor="Hand" Click="saveMarker_Click"/>
+                <Label x:Name="listedMarkersLabel" Content="Markierte Werte:" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Hidden"/>
+                <StackPanel x:Name="listedMarkersPanel" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3"/>
             </Grid>
         </Grid>
     </Grid>
