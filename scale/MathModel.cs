@@ -14,6 +14,8 @@ namespace scale
         public MathModel()
         {
             ScaleValues = new List<double>();
+            ScaleBegin = 0;
+            ScaleEnd = 10;
         }
 
         public void SetScaleKind(string scaleKind) { ScaleKind = scaleKind; }

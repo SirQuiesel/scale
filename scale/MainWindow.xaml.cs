@@ -1,6 +1,11 @@
 ﻿using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
+using Brush = System.Drawing.Brush;
+using Button = System.Windows.Controls.Button;
+using Color = System.Drawing.Color;
+using Label = System.Windows.Controls.Label;
+using Pen = System.Drawing.Pen;
 
 namespace scale
 {
@@ -16,13 +21,18 @@ namespace scale
         private Pen MainPen { get; set; }
 
         private MathModel ScaleData { get; set; }
+        private ScalePainter PaintScale { get; set; }
 
         // Defines the Lnegth Width of an marker element.
         private GridLength MarkerWidth { get; set; }
 
         public MainWindow()
         {
+            MainBrush = new SolidBrush(Color.Black);
+            MainPen = new Pen(MainBrush);
+
             ScaleData = new MathModel();
+            PaintScale = new ScalePainter(ScaleData, MainBrush, MainPen);
             MarkerWidth = new GridLength(100);
 
             InitializeComponent();
@@ -31,26 +41,26 @@ namespace scale
         private void Panel_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
             G = e.Graphics;
-            MainBrush = new SolidBrush(Color.Black);
-            MainPen = new Pen(MainBrush);
-
-            G.DrawLine(MainPen, new System.Drawing.Point(0, 0), new System.Drawing.Point((int) formsHost.MinWidth, (int) formsHost.MinHeight));
-            // G.DrawLine(MainPen, new System.Drawing.Point(0, 0), new System.Drawing.Point(100, 100));
+            PaintScale.DrawNumberLine(G, formsPanel.Width, formsPanel.Height);
         }
 
         private void numberLine_Checked(object sender, RoutedEventArgs e)
         {
             ScaleData.SetScaleKind("numberLine");
+            paintButton.Content = "Zahlenstrahl zeichnen";
+
         }
 
         private void timeLine_Checked(object sender, RoutedEventArgs e)
         {
             ScaleData.SetScaleKind("timeLine");
+            paintButton.Content = "Zeitstrahl zeichnen";
         }
 
         private void thermometer_Checked(object sender, RoutedEventArgs e)
         {
             ScaleData.SetScaleKind("thermometer");
+            paintButton.Content = "Thermometer zeichnen";
         }
 
         private void saveStartAndEndPoints_Click(object sender, RoutedEventArgs e)
@@ -68,6 +78,11 @@ namespace scale
                 listedMarkersLabel.Visibility = Visibility.Visible;
                 AddMarkerToUIList(newMarker);
             }
+        }
+
+        private void paintButton_Click(object sender, RoutedEventArgs e)
+        {
+            formsPanel.Refresh();
         }
 
         /// Ads a marker label and a delete button to the listedMarkersPanel.
