@@ -80,6 +80,7 @@ namespace scale
             }
         }
 
+        // Paints updated Data.
         private void paintButton_Click(object sender, RoutedEventArgs e)
         {
             formsPanel.Refresh();
